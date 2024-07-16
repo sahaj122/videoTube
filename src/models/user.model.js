@@ -51,6 +51,7 @@ const userSchema = new Schema(
   }
 )
 
+// don't use arrow fxn as it doesn't have access to this 
 userSchema.pre("save", async function (next){
   if(!this.isModified("password")) return next();
   
@@ -77,8 +78,7 @@ userSchema.methods.generateAccessToken = function(){
   )
 }
 
-
-userSchema.methods.generateRefrshToken = function(){
+userSchema.methods.generateRefreshToken = function(){
   return jwt.sign(
     {
       _id: this._id,
